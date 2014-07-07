@@ -56,7 +56,9 @@ class War extends CardGame
         if ($tie) {
             print "Round is a tie, each player discards, and plays again.\n";
             foreach ($this->players as $player) {
-                $this->addToPile($player->playCard());
+                if (($card = $player->playCard()) != null) {
+                    $this->addToPile($card);
+                }
             }
             // Recursion
             $this->playRound();
