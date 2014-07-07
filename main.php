@@ -2,7 +2,6 @@
 
 require('autoloader.php');
 
-
 $war = new War(2);
 $war->beginGame()
     ->dealCards();
