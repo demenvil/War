@@ -19,24 +19,6 @@ class War extends CardGame
 
     /**
      * Overridden from parent
-     *
-     * @return War $this
-     */
-    public function beginGame()
-    {
-        // Create all players
-        for ($i = 0; $i < $this->playerCount; $i++) {
-            $this->players[$i] = new CardPlayer($i+1);
-        }
-
-        // Shuffle the deck of cards
-        $this->deck->shuffle();
-
-        return $this;
-    }
-
-    /**
-     * Overridden from parent
      */
     public function playRound()
     {
@@ -76,6 +58,7 @@ class War extends CardGame
             foreach ($this->players as $player) {
                 $this->addToPile($player->playCard());
             }
+            // Recursion
             $this->playRound();
         }
 
