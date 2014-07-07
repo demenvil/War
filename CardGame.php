@@ -39,6 +39,24 @@ abstract class CardGame
     }
 
     /**
+     * Begin a new card game
+     *
+     * @return CardGame $this
+     */
+    public function beginGame()
+    {
+        // Create all players
+        for ($i = 0; $i < $this->playerCount; $i++) {
+            $this->players[$i] = new CardPlayer($i+1);
+        }
+
+        // Shuffle the deck of cards
+        $this->deck->shuffle();
+
+        return $this;
+    }
+
+    /**
      * Deal the specified number of cards to each player, zero is all cards
      *
      * @param int $count
@@ -61,21 +79,6 @@ abstract class CardGame
     }
 
     /**
-     * Retrieves the card count in the pile of cards
-     *
-     * @return int
-     */
-    public function getPileCardCount()
-    {
-        return count($this->pile);
-    }
-
-    /**
-     * Begin a new card game
-     */
-    abstract protected function beginGame();
-
-    /**
      * Play a single round of cards
      */
     abstract protected function playRound();
@@ -84,6 +87,16 @@ abstract class CardGame
      * Checks to see if game is won
      */
     abstract protected function hasGameBeenWon();
+
+    /**
+     * Retrieves the card count in the pile of cards
+     *
+     * @return int
+     */
+    protected function getPileCardCount()
+    {
+        return count($this->pile);
+    }
 
     /**
      * Add a card to the pile of cards
