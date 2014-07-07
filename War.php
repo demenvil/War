@@ -47,9 +47,6 @@ class War extends CardGame
                 $hiPlayer = $player;
                 $tie = false;
             }
-            elseif ($rank < $hiRank) {
-                $tie = false;
-            }
         }
 
         // If a tie occurs, discard one card and play again
@@ -79,27 +76,24 @@ class War extends CardGame
     {
         $hiScore = -1;
         $hiPlayer = null;
+        $tie = false;
 
         foreach ($this->players as $idx => $player) {
             // Determine if a player is out of cards
             if ($player->getHandCardCount() == 0) {
                 printf("Player %d is out of cards and has lost.\n", $player->getPlayerNumber());
                 array_splice($this->players, $idx, 1);
+                continue;
             }
             // Attempt to find the player with the high score
-            elseif ($hiPlayer == null) {
-                if ($hiScore < $player->getHandCardCount()) {
-                    $hiScore = $player->getHandCardCount();
-                    $hiPlayer = $player;
-                }
+            if ($hiScore == $player->getHandCardCount()) {
+                $tie = true;
+                $hiPlayer = null;
             }
-            elseif ($hiPlayer->getHandCardCount() < $player->getHandCardCount()) {
+            elseif ($hiScore < $player->getHandCardCount()) {
                 $hiScore = $player->getHandCardCount();
                 $hiPlayer = $player;
-            }
-            // If there's a tie, then there's no clear winner yet, set to null
-            elseif ($hiPlayer->getHandCardCount() == $player->getHandCardCount()) {
-                $hiPlayer = null;
+                $tie = false;
             }
         }
 
@@ -107,7 +101,7 @@ class War extends CardGame
             return array_shift($this->players);
         }
 
-        // Only announce if we have a clear winner
+        // Only announce if we have a clear leader
         if ($hiPlayer) {
             printf("Player %d is winning with %d cards.\n", $hiPlayer->getPlayerNumber(), $hiScore);
         }
