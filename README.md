@@ -10,4 +10,12 @@ decks and card games, as well as the player class, etc.  I didn't do anything to
 but I think all aspects of the game are covered.  One could easily add the ability to
 increase the number of decks used for the game, or increase the number of players.
 
-Thanks!
+To run code
+----
+
+Just clone the repository and then:
+
+```php
+cd War
+php main.php
+```
